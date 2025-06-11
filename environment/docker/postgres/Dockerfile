@@ -1,0 +1,2 @@
+ARG CUSTOM_POSTGRESDB_IMG=fetest/postgres-fetest:tis
+FROM ${CUSTOM_POSTGRESDB_IMG}

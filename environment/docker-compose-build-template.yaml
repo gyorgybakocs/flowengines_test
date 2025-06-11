@@ -1,0 +1,41 @@
+services:
+  pgvector-${IMG_POSTFIX}:
+    build:
+      context: .
+      dockerfile: docker/pgvector/Dockerfile
+      args:
+        CUSTOM_PGVECTOR_IMG: ${CUSTOM_PGVECTOR_IMG}
+    image: ${PGVECTOR_IMAGE}
+    env_file:
+      - .env
+
+  postgres-${IMG_POSTFIX}:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+      args:
+        CUSTOM_POSTGRESDB_IMG: ${CUSTOM_POSTGRESDB_IMG}
+    image: ${POSTGRESDB_IMAGE}
+    env_file:
+      - .env
+
+  redis-${IMG_POSTFIX}:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      args:
+        CUSTOM_REDIS_IMG: ${CUSTOM_REDIS_IMG}
+    image: ${REDIS_IMAGE}
+    env_file:
+      - .env
+
+  langflow-${IMG_POSTFIX}:
+    build:
+      context: ..
+      dockerfile: environment/docker/langflow/Dockerfile
+      args:
+        CUSTOM_LANGFLOW_IMG: ${CUSTOM_LANGFLOW_IMG}
+        PYTHON_VERSION: ${PYTHON_VERSION}
+    image: ${LANGFLOW_IMAGE}
+    env_file:
+      - .env

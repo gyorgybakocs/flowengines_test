@@ -1,0 +1,4 @@
+langflow/logs/*
+!langflow/logs/.gitkeep
+environment/.env
+.idea/
