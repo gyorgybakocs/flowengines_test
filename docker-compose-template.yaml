@@ -29,8 +29,8 @@ services:
       POSTGRES_DB: ${POSTGRESDB_DB}
     ports:
       - ${POSTGRESDB_PORT}:5432
-#    volumes:
-#      - postgres-${IMG_POSTFIX}-data:/var/lib/postgresql/data:rw
+    volumes:
+      - postgres-${IMG_POSTFIX}-data:/var/lib/postgresql/data:rw
     networks:
       ${IMG_POSTFIX}_net_int:
         ipv4_address: ${POSTGRESDB_INTERNAL}
@@ -49,6 +49,20 @@ services:
       ${IMG_POSTFIX}_net_int:
         ipv4_address: ${REDIS_INTERNAL}
 
+  mongodb-${IMG_POSTFIX}:
+    image: ${MONGODB_IMAGE}
+    container_name: ${MONGODB_HOST}
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${MONGODB_PORT}:27017
+    volumes:
+      - mongodb-${IMG_POSTFIX}-data:/data/db
+    networks:
+      ${IMG_POSTFIX}_net_int:
+        ipv4_address: ${MONGODB_INTERNAL}
+
   langflow-${IMG_POSTFIX}:
     image: ${LANGFLOW_IMAGE}
     container_name: ${LANGFLOW_HOST}
@@ -66,8 +80,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRESDB_PASSWORD}
       POSTGRES_DB: ${POSTGRESDB_DB}
     volumes:
-      - ../langflow/src/tis_components/:/app/tis_components
-      - ../langflow/logs:/app/logs
+      - ./langflow/src/tis_components/:/app/tis_components
+      - ./langflow/logs:/app/logs
+      - ./langflow/data:/app/data
     networks:
       ${IMG_POSTFIX}_net_int:
         ipv4_address: ${LANGFLOW_INTERNAL}
@@ -88,4 +103,7 @@ volumes:
     driver: local
   redis-${IMG_POSTFIX}-data:
     name: redis-${IMG_POSTFIX}-data
+    driver: local
+  mongodb-${IMG_POSTFIX}-data:
+    name: mongodb-${IMG_POSTFIX}-data
     driver: local

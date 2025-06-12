@@ -29,14 +29,14 @@ services:
       POSTGRES_DB: langflow
     ports:
       - 5433:5432
-#    volumes:
-#      - postgres-fe-data:/var/lib/postgresql/data:rw
+    volumes:
+      - postgres-fe-data:/var/lib/postgresql/data:rw
     networks:
       fe_net_int:
         ipv4_address: 10.0.111.101
 
   redis-fe:
-    image: fetest-redis-fe:8.0.2
+    image: fetest-redis-fe
     container_name: redis-fe
     env_file:
       - .env
@@ -48,6 +48,20 @@ services:
     networks:
       fe_net_int:
         ipv4_address: 10.0.111.102
+
+  mongodb-fe:
+    image: fetest-mongodb-fe
+    container_name: mongodb-fe
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-fe-data:/data/db
+    networks:
+      fe_net_int:
+        ipv4_address: 10.0.111.103
 
   langflow-fe:
     image: fetest-langflow-fe
@@ -66,11 +80,12 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: langflow
     volumes:
-      - ../langflow/src/tis_components/:/app/tis_components
-      - ../langflow/logs:/app/logs
+      - ./langflow/src/tis_components/:/app/tis_components
+      - ./langflow/logs:/app/logs
+      - ./langflow/data:/app/data
     networks:
       fe_net_int:
-        ipv4_address: 10.0.111.103
+        ipv4_address: 10.0.111.104
 
 networks:
   fe_net_int:
@@ -88,4 +103,7 @@ volumes:
     driver: local
   redis-fe-data:
     name: redis-fe-data
+    driver: local
+  mongodb-fe-data:
+    name: mongodb-fe-data
     driver: local

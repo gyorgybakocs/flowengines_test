@@ -1,4 +1,14 @@
+.idea/
+
+**/__pycache__/
+
 langflow/logs/*
 !langflow/logs/.gitkeep
+
+data/
+
 environment/.env
-.idea/
+.env
+
+docker-compose.yml
+environment/docker-compose-build.yml

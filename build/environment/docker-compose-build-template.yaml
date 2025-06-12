@@ -29,6 +29,16 @@ services:
     env_file:
       - .env
 
+  mongodb-${IMG_POSTFIX}:
+    build:
+      context: .
+      dockerfile: docker/mongodb/Dockerfile
+      args:
+        CUSTOM_MONGODB_IMG: ${CUSTOM_MONGODB_IMG}
+    image: ${MONGODB_IMAGE}
+    env_file:
+      - .env
+
   langflow-${IMG_POSTFIX}:
     build:
       context: ..

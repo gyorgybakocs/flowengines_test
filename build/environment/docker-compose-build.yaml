@@ -25,7 +25,17 @@ services:
       dockerfile: docker/redis/Dockerfile
       args:
         CUSTOM_REDIS_IMG: fetest/redis-fetest:tis
-    image: fetest-redis-fe:8.0.2
+    image: fetest-redis-fe
+    env_file:
+      - .env
+
+  mongodb-fe:
+    build:
+      context: .
+      dockerfile: docker/mongodb/Dockerfile
+      args:
+        CUSTOM_MONGODB_IMG: fetest/mongodb-fetest:tis
+    image: fetest-mongodb-fe
     env_file:
       - .env
 
