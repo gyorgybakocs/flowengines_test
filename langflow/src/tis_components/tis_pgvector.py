@@ -4,7 +4,7 @@ Tis PGVector Component - Custom PostgreSQL Vector Store for Langflow
 A flexible PostgreSQL vector store that works with user-defined database schemas,
 giving you full control over table names and structure.
 
-Author: Tis Custom Components
+Author: BGDS
 Version: 1.0.0
 """
 
