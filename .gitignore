@@ -7,8 +7,8 @@ langflow/logs/*
 
 data/
 
-environment/.env
+/build/environment/.env
 .env
 
-docker-compose.yml
-environment/docker-compose-build.yml
+/docker-compose.yaml
+/build/environment/docker-compose-build.yaml
