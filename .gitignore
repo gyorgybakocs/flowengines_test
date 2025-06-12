@@ -4,11 +4,12 @@
 
 langflow/logs/*
 !langflow/logs/.gitkeep
-
-langflow/data/*
+/langflow/data/*
+!langflow/data/.gitkeep
 
 /build/environment/.env
 .env
 
 /docker-compose.yaml
 /build/environment/docker-compose-build.yaml
+
