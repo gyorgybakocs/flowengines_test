@@ -5,7 +5,7 @@
 langflow/logs/*
 !langflow/logs/.gitkeep
 
-data/
+data/*
 
 /build/environment/.env
 .env
