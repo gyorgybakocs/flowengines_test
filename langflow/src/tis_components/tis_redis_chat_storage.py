@@ -80,6 +80,12 @@ class TisRedisChatStorageComponent(Component):
             input_types=["Message"],
             required=False
         ),
+        StrInput(
+            name="key_prefix",
+            display_name="Key prefix",
+            info="Key prefix.",
+            required=False
+        ),
     ]
 
     outputs = [
@@ -92,9 +98,12 @@ class TisRedisChatStorageComponent(Component):
 
     def _get_redis_memory(self) -> RedisChatMessageHistory:
         """Create Redis connection"""
+        kwargs = {}
+        if self.key_prefix:
+            kwargs["key_prefix"] = self.key_prefix
         password = parse.quote_plus(self.password) if self.password else ""
         url = f"redis://:{password}@{self.host}:{self.port}/{self.database}"
-        return RedisChatMessageHistory(session_id=self.session_id, url=url)
+        return RedisChatMessageHistory(session_id=self.session_id, url=url, **kwargs)
 
     def store_and_get_messages(self) -> Message:
         """Store any new messages and return formatted conversation history"""
